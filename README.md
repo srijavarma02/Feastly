@@ -1,11 +1,10 @@
 # KateringKing — Website Documentation
-
 > **Crafted for Taste. Engineered for Elegance.**
 > Official website for KateringKing.com — a luxury Hyderabadi catering brand specialising in authentic cuisine and premium event services.
 
 ---
 
-## Table of Contents
+## Table of Contents  
 
 1. [Project Overview](#1-project-overview)
 2. [Tech Stack](#2-tech-stack)
