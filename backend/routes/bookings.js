@@ -2,6 +2,7 @@ const express            = require('express');
 const router             = express.Router();
 const Booking            = require('../models/Booking');
 const { sendBookingEmails } = require('../utils/mailer');
+const { requireAuth, requireManager } = require('../middleware/auth');
 
 /* ═══════════════════════════════════════════════════════════
    POST /api/bookings
@@ -46,10 +47,10 @@ router.post('/', async (req, res) => {
 
 /* ═══════════════════════════════════════════════════════════
    GET /api/bookings
-   List all bookings (admin use) — sorted newest first
+   List all bookings (manager only) — sorted newest first
    Optional query: ?status=Pending
 ════════════════════════════════════════════════════════════ */
-router.get('/', async (req, res) => {
+router.get('/', requireAuth, requireManager, async (req, res) => {
   try {
     const filter = {};
     if (req.query.status) filter.status = req.query.status;
@@ -83,10 +84,10 @@ router.get('/:id', async (req, res) => {
 
 /* ═══════════════════════════════════════════════════════════
    PATCH /api/bookings/:id/status
-   Update only the status field (admin use)
+   Update only the status field (manager only)
    Body: { "status": "Confirmed" }
 ════════════════════════════════════════════════════════════ */
-router.patch('/:id/status', async (req, res) => {
+router.patch('/:id/status', requireAuth, requireManager, async (req, res) => {
   try {
     const { status } = req.body;
     const allowed = ['Pending', 'Reviewed', 'Confirmed', 'Cancelled'];
@@ -119,9 +120,9 @@ router.patch('/:id/status', async (req, res) => {
 
 /* ═══════════════════════════════════════════════════════════
    DELETE /api/bookings/:id
-   Delete a booking (admin use)
+   Delete a booking (manager only)
 ════════════════════════════════════════════════════════════ */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAuth, requireManager, async (req, res) => {
   try {
     const booking = await Booking.findByIdAndDelete(req.params.id);
     if (!booking) {
