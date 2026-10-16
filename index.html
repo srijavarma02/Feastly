@@ -664,6 +664,77 @@
     </section>
 
     <!-- ═══════════════════════════════════════════
+         SECTION — GALLERY
+    ════════════════════════════════════════════ -->
+    <section class="gallery" id="gallery" aria-labelledby="gallery-heading">
+      <div class="container">
+        <div class="section-header reveal-up">
+          <span class="section-label">Our Work</span>
+          <h2 class="section-title" id="gallery-heading">A Feast for the Eyes</h2>
+          <p class="section-subtitle">Moments crafted with passion</p>
+          <div class="section-rule" aria-hidden="true"></div>
+        </div>
+
+        <div class="gallery-grid" role="list">
+
+          <button class="gallery-item reveal-up" aria-label="View: Biryani" data-src="assets/pictrues/Biryani.jpg" role="listitem">
+            <img src="assets/pictrues/Biryani.jpg" alt="Hyderabadi Biryani" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Dum Ki Biryani</div>
+          </button>
+
+          <button class="gallery-item reveal-up" aria-label="View: Kareli Roast" data-src="assets/pictrues/Kareli roast.jpg" role="listitem" style="transition-delay:0.08s">
+            <img src="assets/pictrues/Kareli roast.jpg" alt="Kareli Roast" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Kareli Roast</div>
+          </button>
+
+          <button class="gallery-item reveal-up gallery-item--tall" aria-label="View: Wedding banquet" data-src="assets/pictrues/wedding and Social.jpeg" role="listitem" style="transition-delay:0.16s">
+            <img src="assets/pictrues/wedding and Social.jpeg" alt="Wedding banquet" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Wedding Banquet</div>
+          </button>
+
+          <button class="gallery-item reveal-up" aria-label="View: Murgh Mussallam" data-src="assets/pictrues/Murgh-Musallam.jpg" role="listitem" style="transition-delay:0.1s">
+            <img src="assets/pictrues/Murgh-Musallam.jpg" alt="Murgh Mussallam" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Murgh Mussallam</div>
+          </button>
+
+          <button class="gallery-item reveal-up gallery-item--wide" aria-label="View: Corporate event" data-src="assets/pictrues/Corporate events.jpeg" role="listitem" style="transition-delay:0.18s">
+            <img src="assets/pictrues/Corporate events.jpeg" alt="Corporate event catering" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Corporate Event</div>
+          </button>
+
+          <button class="gallery-item reveal-up" aria-label="View: Haleem" data-src="assets/pictrues/haleem.jpg" role="listitem" style="transition-delay:0.12s">
+            <img src="assets/pictrues/haleem.jpg" alt="Haleem" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Haleem</div>
+          </button>
+
+          <button class="gallery-item reveal-up" aria-label="View: Private dining" data-src="assets/pictrues/Bespoke private dining.jpeg" role="listitem" style="transition-delay:0.2s">
+            <img src="assets/pictrues/Bespoke private dining.jpeg" alt="Bespoke private dining" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Bespoke Private Dining</div>
+          </button>
+
+          <button class="gallery-item reveal-up" aria-label="View: Double Ka Meetha" data-src="assets/pictrues/Double_ka_meetha.jpg" role="listitem" style="transition-delay:0.14s">
+            <img src="assets/pictrues/Double_ka_meetha.jpg" alt="Double Ka Meetha dessert" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Double Ka Meetha</div>
+          </button>
+
+          <button class="gallery-item reveal-up" aria-label="View: Warqi Samosa" data-src="assets/pictrues/Warqi Samosa.jpg" role="listitem" style="transition-delay:0.22s">
+            <img src="assets/pictrues/Warqi Samosa.jpg" alt="Warqi Samosa" class="gallery-img" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+            <div class="gallery-caption">Warqi Samosa</div>
+          </button>
+
+        </div><!-- /gallery-grid -->
+      </div>
+
+      <!-- Lightbox overlay (pure CSS + minimal JS) -->
+      <div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox" hidden>
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close image">&times;</button>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+        <p class="lightbox-caption" id="lightbox-caption"></p>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════════════════
          SECTION — TESTIMONIALS
     ════════════════════════════════════════════ -->
     <section class="testimonials" id="testimonials" aria-labelledby="testimonials-heading">
