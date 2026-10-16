@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manager Login — KateringKing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold:       #C9A84C;
+      --gold-light: #E2C47A;
+      --navy:       #0D1B2A;
+      --navy-mid:   #152233;
+      --navy-soft:  #1E2F45;
+      --cream:      #F0EBE0;
+      --ivory:      #F5F0EA;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+      --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--navy);
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background texture */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(201,168,76,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(184,192,204,0.05) 0%, transparent 50%),
+        linear-gradient(160deg, #0A1520 0%, #0D1B2A 35%, #152233 70%, #0A1218 100%);
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 1;
+      background: rgba(21, 34, 51, 0.85);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 3rem 2.8rem 3.5rem;
+      width: min(420px, calc(100vw - 2rem));
+      animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 2.2rem;
+    }
+    .login-logo-name {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 2.1rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+    }
+    .login-logo-tagline {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-top: 0.2rem;
+    }
+    .login-divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1rem auto 0;
+    }
+
+    .login-title {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.7);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-group {
+      margin-bottom: 1.2rem;
+    }
+    .login-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 0.4rem;
+    }
+    .login-input {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      border-radius: 2px;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .login-input:focus {
+      border-color: var(--gold-light);
+      background: rgba(255,255,255,0.1);
+    }
+    .login-input::placeholder { color: rgba(255,255,255,0.28); }
+
+    .login-error {
+      background: rgba(220,80,80,0.15);
+      border: 1px solid rgba(220,80,80,0.4);
+      color: #f4a0a0;
+      font-size: 0.82rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+      display: none;
+      text-align: center;
+    }
+    .login-error.visible { display: block; }
+
+    .login-btn {
+      width: 100%;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s, opacity 0.2s;
+      border-radius: 2px;
+    }
+    .login-btn:hover:not(:disabled) { background: var(--gold-light); }
+    .login-btn:disabled { opacity: 0.6; cursor: default; }
+
+    .login-back {
+      display: block;
+      text-align: center;
+      margin-top: 1.8rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .login-back:hover { color: var(--gold-light); }
+  </style>
+</head>
+<body>
+
+  <div class="login-card" role="main">
+    <div class="login-logo">
+      <span class="login-logo-name">KateringKing</span>
+      <span class="login-logo-tagline">Crafted for Taste. Engineered for Elegance.</span>
+      <div class="login-divider" aria-hidden="true"></div>
+    </div>
+
+    <p class="login-title">Manager Portal</p>
+
+    <div class="login-error" id="login-error" role="alert" aria-live="polite"></div>
+
+    <form id="login-form" novalidate>
+      <div class="login-group">
+        <label class="login-label" for="l-email">Email Address</label>
+        <input
+          type="email"
+          id="l-email"
+          name="email"
+          class="login-input"
+          placeholder="manager@kateringking.com"
+          required
+          autocomplete="email"
+          aria-required="true"
+        />
+      </div>
+      <div class="login-group">
+        <label class="login-label" for="l-password">Password</label>
+        <input
+          type="password"
+          id="l-password"
+          name="password"
+          class="login-input"
+          placeholder="••••••••"
+          required
+          autocomplete="current-password"
+          aria-required="true"
+        />
+      </div>
+      <button type="submit" class="login-btn" id="login-btn">Login</button>
+    </form>
+
+    <a href="index.html" class="login-back">← Back to KateringKing</a>
+  </div>
+
+  <script src="assets/js/login.js"></script>
+</body>
+</html>

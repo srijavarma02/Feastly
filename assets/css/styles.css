@@ -2906,3 +2906,15 @@ button {
   .pricing-grid { grid-template-columns: 1fr; }
   .pricing-grid .pricing-card:last-child { grid-column: auto; max-width: none; }
 }
+
+/* Manager login link in footer */
+.footer-manager-link {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.35);
+  transition: color 0.2s;
+  text-decoration: none;
+  margin-top: 0.4rem;
+}
+.footer-manager-link:hover { color: var(--gold); }
