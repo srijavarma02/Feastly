@@ -16,6 +16,7 @@ app.use(express.json());
 /* ── Routes ─────────────────────────────────────────────── */
 app.use('/api/auth',     require('./routes/auth'));
 app.use('/api/bookings', require('./routes/bookings'));
+app.use('/api/content',  require('./routes/content'));
 // TODO: app.use('/api/menu', require('./routes/menu'));  ← add when menu is ready
 
 /* ── Health check ───────────────────────────────────────── */
