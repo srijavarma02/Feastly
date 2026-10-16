@@ -9,11 +9,12 @@ const app = express();
 app.use(cors({
   origin: process.env.FRONTEND_URL || '*',   // lock down to your Vercel URL in prod
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
 /* ── Routes ─────────────────────────────────────────────── */
+app.use('/api/auth',     require('./routes/auth'));
 app.use('/api/bookings', require('./routes/bookings'));
 // TODO: app.use('/api/menu', require('./routes/menu'));  ← add when menu is ready
 
