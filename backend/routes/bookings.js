@@ -9,6 +9,19 @@ const { sendBookingEmails } = require('../utils/mailer');
 ════════════════════════════════════════════════════════════ */
 router.post('/', async (req, res) => {
   try {
+    // Validate eventDate is not in the past
+    if (req.body.eventDate) {
+      const eventDate = new Date(req.body.eventDate);
+      const today     = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (eventDate < today) {
+        return res.status(400).json({
+          success: false,
+          errors: ['Event date cannot be in the past. Please select a future date.']
+        });
+      }
+    }
+
     const booking = await Booking.create(req.body);
 
     // Send emails (non-blocking — won't fail the response if email errors)

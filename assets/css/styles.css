@@ -2496,6 +2496,10 @@ button {
   vertical-align: middle;
   margin-left: 0.5rem;
 }
+/* Ensure [hidden] always wins over display:inline-block */
+.btn-spinner[hidden] {
+  display: none !important;
+}
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
