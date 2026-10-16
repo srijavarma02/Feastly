@@ -498,3 +498,83 @@
     if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) closeLightbox();
   });
 })();
+
+
+/* ═══════════════════════════════════════════════════════════════
+   11. DYNAMIC CONTENT — loads from /api/content, falls back gracefully
+═══════════════════════════════════════════════════════════════ */
+(function initDynamicContent() {
+  const BACKEND_BASE = (
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1'
+  )
+    ? 'http://localhost:5000'
+    : 'https://kateringking-backend.onrender.com';
+
+  fetch(`${BACKEND_BASE}/api/content`)
+    .then(r => r.json())
+    .then(json => {
+      if (!json.success || !json.data) return;
+      const data = json.data;
+
+      // Plain text keys → fill elements with matching data-content-key
+      ['heroTagline', 'heroDesc', 'aboutBody1', 'aboutBody2'].forEach(key => {
+        if (data[key]) {
+          document.querySelectorAll(`[data-content-key="${key}"]`)
+            .forEach(el => { el.textContent = data[key]; });
+        }
+      });
+
+      // Testimonials — rebuild the testimonials list
+      if (Array.isArray(data.testimonials) && data.testimonials.length) {
+        const list = document.getElementById('testimonials-list');
+        if (list) {
+          list.innerHTML = data.testimonials.map((t, i) => `
+            <article class="testimonial-card reveal-up" style="${i > 0 ? `transition-delay:${i * 0.14}s` : ''}">
+              <div class="testimonial-stars" aria-label="${t.rating || 5} out of 5 stars">
+                <span aria-hidden="true">${'★'.repeat(t.rating || 5)}</span>
+              </div>
+              <blockquote class="testimonial-quote">${t.quote || ''}</blockquote>
+              <footer class="testimonial-footer">
+                <span class="testimonial-name">${t.name || ''}</span>
+                <span class="testimonial-event">${t.event || ''}</span>
+              </footer>
+            </article>
+          `).join('');
+          // Re-observe new elements for scroll reveal
+          list.querySelectorAll('.reveal-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(48px)';
+          });
+        }
+      }
+
+      // Pricing — rebuild the pricing packages list
+      if (Array.isArray(data.pricing) && data.pricing.length) {
+        const grid = document.getElementById('pricing-packages');
+        if (grid) {
+          grid.innerHTML = data.pricing.map((p, i) => `
+            <article class="pricing-card${p.featured ? ' pricing-card--featured' : ''} reveal-up" style="${i > 0 ? `transition-delay:${i * 0.14}s` : ''}">
+              ${p.featured ? '<div class="pricing-featured-badge">Most Popular</div>' : ''}
+              <div class="pricing-card-header">
+                <span class="pricing-tier">${p.tier || ''}</span>
+                <p class="pricing-tagline">${p.tagline || ''}</p>
+                <div class="pricing-price">
+                  <span class="pricing-from">From</span>
+                  <span class="pricing-amount">${p.price || ''}</span>
+                  <span class="pricing-per">/ ${p.per || 'per person'}</span>
+                </div>
+              </div>
+              <ul class="pricing-features" role="list">
+                ${(p.features || []).map(f => `<li><span class="pricing-check" aria-hidden="true">✓</span> ${f}</li>`).join('')}
+              </ul>
+              <a href="#contact" class="btn ${p.featured ? 'btn-primary' : 'btn-ghost'} pricing-cta">Enquire Now</a>
+            </article>
+          `).join('');
+        }
+      }
+    })
+    .catch(() => {
+      // API unreachable — silently fall back to hardcoded HTML defaults
+    });
+})();
