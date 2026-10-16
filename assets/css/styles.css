@@ -2524,3 +2524,101 @@ button {
 .btn--sent .btn-text {
   letter-spacing: 0.1em;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   TESTIMONIALS SECTION
+═══════════════════════════════════════════════════════════════ */
+.testimonials {
+  background: var(--navy);
+  padding: var(--section-py) 0;
+  position: relative;
+}
+
+.testimonials::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 60%, rgba(201,168,76,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 30%, rgba(184,192,204,0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.testimonial-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-top: 3px solid var(--gold);
+  padding: 2.2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  transition: background var(--dur-fast), border-color var(--dur-fast), transform var(--dur-med) var(--ease-out);
+}
+
+.testimonial-card:hover {
+  background: rgba(201,150,58,0.07);
+  border-color: var(--gold);
+  transform: translateY(-6px);
+}
+
+.testimonial-stars {
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.testimonial-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  font-style: italic;
+  color: rgba(240,235,224,0.85);
+  line-height: 1.85;
+  flex: 1;
+  border: none;
+  padding: 0;
+  margin: 0;
+  quotes: '\201C' '\201D';
+}
+.testimonial-quote::before { content: open-quote; color: var(--gold); }
+.testimonial-quote::after  { content: close-quote; color: var(--gold); }
+
+.testimonial-footer {
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(201,168,76,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.testimonial-name {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.testimonial-event {
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 1024px) {
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+  .testimonials-grid .testimonial-card:last-child { grid-column: 1 / -1; max-width: 600px; margin: 0 auto; }
+}
+
+@media (max-width: 640px) {
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .testimonials-grid .testimonial-card:last-child { grid-column: auto; max-width: none; }
+}
