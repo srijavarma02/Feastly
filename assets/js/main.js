@@ -378,7 +378,9 @@
     const btnText    = submitBtn.querySelector('.btn-text');
     const btnSpinner = submitBtn.querySelector('.btn-spinner');
     submitBtn.disabled   = loading;
-    btnText.textContent  = loading ? 'Sending…' : 'Send Enquiry';
+    if (!submitBtn.classList.contains('btn--sent')) {
+      btnText.textContent  = loading ? 'Sending…' : 'Send Enquiry';
+    }
     btnSpinner.hidden    = !loading;
   }
 
@@ -422,7 +424,18 @@
           '✓ Your enquiry has been received. We will contact you within 24 hours.',
           'success'
         );
-        form.reset();
+        // "Sent" state: gold checkmark for 3 seconds then reset
+        const btnText = submitBtn.querySelector('.btn-text');
+        submitBtn.disabled = true;
+        btnText.textContent = '✓ Sent';
+        submitBtn.classList.add('btn--sent');
+        setTimeout(() => {
+          btnText.textContent = 'Send Enquiry';
+          submitBtn.classList.remove('btn--sent');
+          submitBtn.disabled = false;
+          form.reset();
+          clearStatus();
+        }, 3000);
       } else {
         // Validation errors array or single error string from the server
         const msg = Array.isArray(json.errors)

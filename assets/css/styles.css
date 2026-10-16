@@ -2512,3 +2512,15 @@ button {
     grid-column: 1;
   }
 }
+
+/* ── Sent state for submit button ── */
+.btn--sent {
+  background: var(--gold) !important;
+  color: var(--navy) !important;
+  border-color: var(--gold) !important;
+  opacity: 0.92;
+  cursor: default;
+}
+.btn--sent .btn-text {
+  letter-spacing: 0.1em;
+}
