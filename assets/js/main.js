@@ -530,7 +530,7 @@
         const list = document.getElementById('testimonials-list');
         if (list) {
           list.innerHTML = data.testimonials.map((t, i) => `
-            <article class="testimonial-card reveal-up" style="${i > 0 ? `transition-delay:${i * 0.14}s` : ''}">
+            <article class="testimonial-card is-visible" style="${i > 0 ? `transition-delay:${i * 0.14}s` : ''}">
               <div class="testimonial-stars" aria-label="${t.rating || 5} out of 5 stars">
                 <span aria-hidden="true">${'★'.repeat(t.rating || 5)}</span>
               </div>
@@ -541,11 +541,6 @@
               </footer>
             </article>
           `).join('');
-          // Re-observe new elements for scroll reveal
-          list.querySelectorAll('.reveal-up').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(48px)';
-          });
         }
       }
 
@@ -554,7 +549,7 @@
         const grid = document.getElementById('pricing-packages');
         if (grid) {
           grid.innerHTML = data.pricing.map((p, i) => `
-            <article class="pricing-card${p.featured ? ' pricing-card--featured' : ''} reveal-up" style="${i > 0 ? `transition-delay:${i * 0.14}s` : ''}">
+            <article class="pricing-card${p.featured ? ' pricing-card--featured' : ''} is-visible" style="${i > 0 ? `transition-delay:${i * 0.14}s` : ''}">
               ${p.featured ? '<div class="pricing-featured-badge">Most Popular</div>' : ''}
               <div class="pricing-card-header">
                 <span class="pricing-tier">${p.tier || ''}</span>
@@ -574,7 +569,8 @@
         }
       }
     })
-    .catch(() => {
-      // API unreachable — silently fall back to hardcoded HTML defaults
+    .catch((err) => {
+      // API unreachable — hardcoded HTML defaults remain visible
+      console.warn('[DynamicContent] Could not load from API:', err.message);
     });
 })();
