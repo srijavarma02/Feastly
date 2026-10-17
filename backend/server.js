@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 const express  = require('express');
 const mongoose = require('mongoose');
 const cors     = require('cors');
@@ -8,7 +8,7 @@ const app = express();
 /* ── Middleware ─────────────────────────────────────────── */
 app.use(cors({
   origin: process.env.FRONTEND_URL || '*',   // lock down to your Vercel URL in prod
-  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
