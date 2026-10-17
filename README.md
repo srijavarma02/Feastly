@@ -130,13 +130,16 @@ Both scripts are safe to re-run — they skip entries that already exist.
 
 ```bash
 # Development (with auto-reload)
-cd backend && npm run dev
+npm --prefix backend run dev
 
 # Production
-cd backend && npm start
+npm --prefix backend start
 ```
 
 The API will be available at `http://localhost:5000`.
+Keep this backend process running while using the site locally. Serve the project
+through a local web server (for example, VS Code Live Server) at `localhost` or
+`127.0.0.1`; opening the HTML files directly does not use the local API.
 
 ---
 
@@ -162,6 +165,11 @@ The API will be available at `http://localhost:5000`.
 - **Content Editor** — edit hero tagline/desc, about text, testimonials (add/remove/edit), pricing packages
 - **View Site** — opens customer site in a new tab with a "Back to Dashboard" banner
 - **Logout** — clears JWT from localStorage
+
+Content edits are saved to MongoDB and loaded by the public site on refresh. For
+changes to appear on the deployed site, the dashboard and public site must use
+the same deployed backend and persistent MongoDB database; local edits are saved
+to the local database only.
 
 ---
 

@@ -280,15 +280,30 @@ function renderCharts() {
 let contentLoaded = false;
 
 async function loadContentEditor() {
-  contentLoaded = true;
   const wrap = document.getElementById('content-form-wrap');
   try {
     const res  = await fetch(`${BACKEND_BASE}/api/content`);
     const json = await res.json();
-    const data = (json.success && json.data) ? json.data : {};
+    if (!res.ok || !json.success || !json.data) {
+      throw new Error(json.error || 'Unable to load saved content.');
+    }
+    const data = json.data;
     renderContentEditor(data, wrap);
-  } catch (_) {
-    renderContentEditor({}, wrap);
+    contentLoaded = true;
+  } catch (err) {
+    contentLoaded = false;
+    wrap.replaceChildren();
+
+    const message = document.createElement('p');
+    message.className = 'db-loading-msg';
+    message.textContent = `Unable to load saved content: ${err.message}`;
+
+    const retryButton = document.createElement('button');
+    retryButton.className = 'db-content-save-btn';
+    retryButton.textContent = 'Retry';
+    retryButton.addEventListener('click', loadContentEditor);
+
+    wrap.append(message, retryButton);
   }
 }
 
@@ -483,7 +498,11 @@ async function saveContent(key, value, type, btn, fbId) {
       body: JSON.stringify({ value, type })
     });
     const json = await res.json();
-    if (!res.ok) throw new Error(json.error || 'Save failed');
+    if (!res.ok || !json.success) {
+      const errorMessage = json.error ||
+        (Array.isArray(json.errors) ? json.errors.join(', ') : 'Save failed');
+      throw new Error(errorMessage);
+    }
     if (fb) { fb.textContent = '✓ Saved'; fb.className = 'db-save-feedback ok'; }
     setTimeout(() => { if (fb) fb.textContent = ''; }, 2500);
   } catch (err) {

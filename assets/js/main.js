@@ -519,14 +519,14 @@
 
       // Plain text keys → fill elements with matching data-content-key
       ['heroTagline', 'heroDesc', 'aboutBody1', 'aboutBody2'].forEach(key => {
-        if (data[key]) {
+        if (data[key] !== undefined && data[key] !== null) {
           document.querySelectorAll(`[data-content-key="${key}"]`)
             .forEach(el => { el.textContent = data[key]; });
         }
       });
 
       // Testimonials — rebuild the testimonials list
-      if (Array.isArray(data.testimonials) && data.testimonials.length) {
+      if (Array.isArray(data.testimonials)) {
         const list = document.getElementById('testimonials-list');
         if (list) {
           list.innerHTML = data.testimonials.map((t, i) => `
@@ -545,7 +545,7 @@
       }
 
       // Pricing — rebuild the pricing packages list
-      if (Array.isArray(data.pricing) && data.pricing.length) {
+      if (Array.isArray(data.pricing)) {
         const grid = document.getElementById('pricing-packages');
         if (grid) {
           grid.innerHTML = data.pricing.map((p, i) => `

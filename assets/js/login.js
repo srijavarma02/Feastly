@@ -61,7 +61,17 @@ form.addEventListener('submit', async (e) => {
       btn.textContent = 'Login';
     }
   } catch (_err) {
-    showError('Unable to connect to server. Please try again.');
+    const openedFromFile = window.location.protocol === 'file:';
+    const isLocalDevelopment =
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1';
+    if (openedFromFile) {
+      showError('Serve the site through a local web server (for example, VS Code Live Server) and start the backend with "npm run dev".');
+    } else {
+      showError(isLocalDevelopment
+        ? 'Unable to connect to the local server. Start MongoDB and run "npm run dev" in the backend folder, then try again.'
+        : 'Unable to connect to the server. Please check the server status or try again later.');
+    }
     btn.disabled    = false;
     btn.textContent = 'Login';
   }

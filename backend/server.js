@@ -7,7 +7,18 @@ const app = express();
 
 /* ── Middleware ─────────────────────────────────────────── */
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',   // lock down to your Vercel URL in prod
+  origin: (origin, callback) => {
+    const frontendUrl = process.env.FRONTEND_URL;
+    const isLocalDevelopmentOrigin =
+      process.env.NODE_ENV !== 'production' &&
+      /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || '');
+
+    if (!origin || !frontendUrl || origin === frontendUrl || isLocalDevelopmentOrigin) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Origin is not allowed by CORS'));
+  },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
